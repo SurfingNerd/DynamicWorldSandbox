@@ -21,11 +21,6 @@ namespace DynamicWorldSandbox.Model.CoordinateSystem
 
     public class HexTileCalculator : ITileFieldCalculator
     {
-        public Tile[] GetAllNeighbours(Tile waterTile, World world)
-        {
-            return GetAllNeighbours(waterTile.X, waterTile.Y, world);
-        }
-
         public Tile[] GetAllNeighbours(int x, int y, World world)
         {
             Tile[] result = new Tile[6];
@@ -45,7 +40,38 @@ namespace DynamicWorldSandbox.Model.CoordinateSystem
             int xNew = 0;
             int yNew = 0;
 
-            GetTilePos(x, y, out xNew, out yNew, direction);
+            switch (direction)
+            {
+                case HexTileDirection.NorthEast:
+                    xNew = x + 1;
+                    yNew = y - 1;
+                    break;
+                case HexTileDirection.East:
+                    xNew = x + 1;
+                    yNew = y;
+                    break;
+                case HexTileDirection.SouthEast:
+                    xNew = x;
+                    yNew = y + 1;
+                    break;
+                case HexTileDirection.SouthWest:
+                    xNew = x - 1;
+                    yNew = y + 1;
+                    break;
+                case HexTileDirection.West:
+                    xNew = x - 1;
+                    yNew = y;
+                    break;
+                case HexTileDirection.NorthWest:
+                    xNew = x;
+                    yNew = y - 1;
+                    break;
+                default:
+                    //just to satisfy the compiler.
+                    xNew = -1;
+                    yNew = -1;
+                    break;
+            }
 
             if (xNew >= world.Width || xNew < 0)
             {
@@ -57,42 +83,6 @@ namespace DynamicWorldSandbox.Model.CoordinateSystem
             }
 
             return world.Tiles[xNew, yNew];
-        }
-
-        public void GetTilePos(int x, int y, out int xOut, out int yOut , HexTileDirection direction)
-        {
-            switch (direction)
-            {
-                case HexTileDirection.NorthEast:
-                    xOut = x + 1;
-                    yOut = y - 1;
-                    break;
-                case HexTileDirection.East:
-                    xOut = x + 1;
-                    yOut = y;
-                    break;
-                case HexTileDirection.SouthEast:
-                    xOut = x;
-                    yOut = y + 1;
-                    break;
-                case HexTileDirection.SouthWest:
-                    xOut = x - 1;
-                    yOut = y + 1;
-                    break;
-                case HexTileDirection.West:
-                    xOut = x - 1;
-                    yOut = y;
-                    break;
-                case HexTileDirection.NorthWest:
-                    xOut = x;
-                    yOut = y - 1;
-                    break;
-                default:
-                    //just to satisfy the compiler.
-                    xOut = -1;
-                    yOut = -1;
-                    break;
-            }
         }
     }
 }

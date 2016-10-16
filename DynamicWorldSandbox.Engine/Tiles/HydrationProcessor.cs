@@ -129,7 +129,7 @@ namespace DynamicWorldSandbox.Engine.Tiles
 
                 double currentWaterLevelAbsolute = waterTile.TerrainHeight + waterTile.Hydration;
 
-                Tile[] neightbours = m_world.FieldCalculator.GetAllNeighbours(waterTile, m_world);
+                Tile[] neightbours = m_world.FieldCalculator.GetAllNeighbours(waterTile.X, waterTile.Y, m_world);
                 bool isDeepestHoleInDaHood = true;
                 double totalDrop = 0;
                 GetNeighbourhoodInfo(waterTile, neightbours , out isDeepestHoleInDaHood, out totalDrop);
@@ -177,7 +177,7 @@ namespace DynamicWorldSandbox.Engine.Tiles
                                 {
                                     if (!m_waterTiles.Contains(neightbour))
                                     {
-                                        Tile[] tiles = m_world.FieldCalculator.GetAllNeighbours(waterTile, m_world);
+                                        Tile[] tiles = m_world.FieldCalculator.GetAllNeighbours(waterTile.X, waterTile.Y, m_world);
                                         bool neighbourIsLowest = true;
                                         double neighboursTotalDrop = 0;
                                         GetNeighbourhoodInfo(neightbour, tiles, out neighbourIsLowest, out neighboursTotalDrop);

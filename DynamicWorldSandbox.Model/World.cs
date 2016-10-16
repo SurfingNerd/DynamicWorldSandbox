@@ -18,7 +18,7 @@ namespace DynamicWorldSandbox.Model
 
         public World(int width, int height)
         {
-            FieldCalculator = new HexTileCalculator();
+            FieldCalculator = new SquareFieldCalculator();
             Width = width;
             Height = height;
 

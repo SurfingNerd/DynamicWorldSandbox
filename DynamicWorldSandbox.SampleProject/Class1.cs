@@ -31,16 +31,20 @@ namespace DynamicWorldSandbox.SampleProject
 
             Scheduler.Scheduler sheduler = new Scheduler.Scheduler(1000);
 
-            world.Tiles[10, 10].Hydration = 8000;
+            world.Tiles[10, 10].Hydration = 10000;
 
-
-            
             world.Tiles[30, 30].TerrainHeight = -1;
             world.Tiles[29, 29].TerrainHeight = -1;
             world.Tiles[29, 30].TerrainHeight = -1;
             world.Tiles[31, 31].TerrainHeight = -1;
             world.Tiles[30, 31].TerrainHeight = -1;
-            
+
+            world.Tiles[10, 30].TerrainHeight = 3;
+            world.Tiles[10, 29].TerrainHeight = 3;
+            world.Tiles[11, 30].TerrainHeight = 3;
+            world.Tiles[11, 31].TerrainHeight = 3;
+            world.Tiles[12, 31].TerrainHeight = 3;
+
             Console.WriteLine("After initialisation.");
             DebugWaterInfos(world);
 

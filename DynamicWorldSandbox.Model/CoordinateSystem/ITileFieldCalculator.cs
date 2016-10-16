@@ -9,6 +9,6 @@ namespace DynamicWorldSandbox.Model.CoordinateSystem
     public interface ITileFieldCalculator
     {
         Tile[] GetAllNeighbours(int x, int y, World world);
-        Tile[] GetAllNeighbours(Tile waterTile, World m_world);
+        //Tile[] GetAllNeighbours(Tile waterTile, World m_world);
     }
 }
