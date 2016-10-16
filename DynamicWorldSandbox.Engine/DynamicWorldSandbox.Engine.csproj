@@ -46,6 +46,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tiles\HydrationProcessor.cs" />
     <Compile Include="Transformator.cs" />
+    <Compile Include="UpdateStrategies\IGraduallyUpdateProcessor.cs" />
+    <Compile Include="UpdateStrategies\IterativeGraduallyUpdateProcessor.cs" />
+    <Compile Include="UpdateStrategies\RandomMemoryGraduallyUpdateProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DynamicWorldSandbox.Model\DynamicWorldSandbox.Model.csproj">

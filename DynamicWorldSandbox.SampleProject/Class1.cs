@@ -45,6 +45,16 @@ namespace DynamicWorldSandbox.SampleProject
             world.Tiles[11, 31].TerrainHeight = 3;
             world.Tiles[12, 31].TerrainHeight = 3;
 
+
+            BuildRiverNorthSoutch(world, 19, 0, 99, -3);
+            BuildRiverNorthSoutch(world, 20, 0, 99, -3);
+            BuildRiverNorthSoutch(world, 21, 0, 99, -3);
+
+            BuildRiverNorthSoutch(world, 22, 0, 99, 5);
+            BuildRiverNorthSoutch(world, 23, 0, 99, 5);
+            BuildRiverNorthSoutch(world, 24, 0, 99, 5);
+            BuildRiverNorthSoutch(world, 25, 0, 99, 5);
+
             Console.WriteLine("After initialisation.");
             DebugWaterInfos(world);
 
@@ -52,9 +62,10 @@ namespace DynamicWorldSandbox.SampleProject
             sheduler.RegisterJob(processor);
 
             watch.Restart();
-            int countOfSimulationTicks = 25000000;
+            int countOfSimulationTicks = 1000;//25000000;
 
             int saveImageFrequencyK = 1;
+            int saveImageMultiplier = 1;
 
             string baseDir = Directory.GetCurrentDirectory();
             DirectoryInfo dirInfo = new DirectoryInfo(Path.Combine(baseDir, DateTime.Now.ToString("mmddHHmmss")));
@@ -65,18 +76,28 @@ namespace DynamicWorldSandbox.SampleProject
             for (int i = 0; i < countOfSimulationTicks; i++)
             {
                 sheduler.RunTick(i);     
-                if (i % (saveImageFrequencyK * 1000) == 0)
+                if (i % (saveImageFrequencyK * saveImageMultiplier) == 0)
                 {
                     //DebugWaterInfos(world);
-                    SaveImage(world, i, dirInfo);
+                    SaveImage(world, i, dirInfo, saveImageMultiplier);
                 }           
             }
             watch.Stop();
 
             Console.WriteLine("Simulation took " + watch.Elapsed.TotalSeconds.ToString("#.####"));
-            SaveImage(world, countOfSimulationTicks, dirInfo);
+            SaveImage(world, countOfSimulationTicks, dirInfo, saveImageMultiplier);
             DebugWaterInfos(world);
             Console.ReadLine();
+        }
+
+
+
+        private static void BuildRiverNorthSoutch(World world, int x, int yStart, int yEnd, int depth)
+        {
+            for (int y = yStart; y <= yEnd; y++)
+            {
+                world.Tiles[x, y].TerrainHeight = depth;
+            }
         }
 
         private static void DebugWaterInfos(World world)
@@ -95,9 +116,9 @@ namespace DynamicWorldSandbox.SampleProject
             Console.WriteLine("Total Hydration: " + totalHydration.ToString());
         }
 
-        private static void SaveImage(World world, int tickCount, DirectoryInfo dirInfo)
+        private static void SaveImage(World world, int tickCount, DirectoryInfo dirInfo, int saveImageMultiplier)
         {
-            FileInfo waterImageFile = new FileInfo(Path.Combine(dirInfo.FullName, "Water" + (tickCount / 1000).ToString() + "K.png"));
+            FileInfo waterImageFile = new FileInfo(Path.Combine(dirInfo.FullName, "Water" + (tickCount / saveImageMultiplier).ToString() + ".png"));
             System.Drawing.Bitmap waterBitmap = new System.Drawing.Bitmap(world.Width, world.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
 
