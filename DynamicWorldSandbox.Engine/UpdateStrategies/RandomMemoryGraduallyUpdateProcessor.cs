@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace DynamicWorldSandbox.Engine.UpdateStrategies
 {
-
     public class RandomMemoryGraduallyUpdateProcessor : IGraduallyUpdateProcessor
     {
         ProcessFunction m_function;

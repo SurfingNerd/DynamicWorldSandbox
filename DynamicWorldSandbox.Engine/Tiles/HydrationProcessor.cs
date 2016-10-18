@@ -31,7 +31,7 @@ namespace DynamicWorldSandbox.Engine.Tiles
         {
             //m_wholeWorldUpdateFrequency = wholeWorldUpdateFrequency;
             m_world = world;
-            m_hydrationUpdateProcessor = new RandomMemoryGraduallyUpdateProcessor(10);
+            m_hydrationUpdateProcessor = new RandomMemoryGraduallyUpdateProcessor(100);
             m_hydrationUpdateProcessor.Initialize(world, new ProcessFunction(UpdateHydrationTile));
 
             m_maxHydrationTransferPerTick = maxHydrationTransferPerTick;

@@ -50,10 +50,11 @@ namespace DynamicWorldSandbox.SampleProject
             BuildRiverNorthSoutch(world, 20, 0, 99, -3);
             BuildRiverNorthSoutch(world, 21, 0, 99, -3);
 
-            BuildRiverNorthSoutch(world, 22, 0, 99, 5);
-            BuildRiverNorthSoutch(world, 23, 0, 99, 5);
-            BuildRiverNorthSoutch(world, 24, 0, 99, 5);
-            BuildRiverNorthSoutch(world, 25, 0, 99, 5);
+            BuildRiverNorthSoutch(world, 22, 0, 60, 5);
+            BuildRiverNorthSoutch(world, 23, 0, 61, 5);
+            BuildRiverNorthSoutch(world, 24, 0, 62, 5);
+            BuildRiverNorthSoutch(world, 25, 0, 61, 5);
+            BuildRiverNorthSoutch(world, 25, 0, 60, 5);
 
             Console.WriteLine("After initialisation.");
             DebugWaterInfos(world);
