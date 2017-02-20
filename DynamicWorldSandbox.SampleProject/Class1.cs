@@ -16,6 +16,7 @@ namespace DynamicWorldSandbox.SampleProject
         public static void Main()
         {
             GameRunner runner = new GameRunner(100, 100000);
+            runner.RunGame();
         }
 
 

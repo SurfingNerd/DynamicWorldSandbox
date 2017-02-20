@@ -16,6 +16,11 @@ namespace DynamicWorldSandbox.Model
         public Tile[,] Tiles;
         public ITileFieldCalculator FieldCalculator;
 
+        /// <summary>
+        /// How much "Biomass" a tile can have.
+        /// </summary>
+        public double TileFatness = 100;
+
         public World(int width, int height)
         {
             FieldCalculator = new SquareFieldCalculator();

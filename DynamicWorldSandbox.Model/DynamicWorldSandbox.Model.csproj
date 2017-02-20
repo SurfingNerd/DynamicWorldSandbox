@@ -41,22 +41,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Building.cs" />
+    <Compile Include="Modules\BuildingModule\Building.cs" />
     <Compile Include="CoordinateSystem\ITileFieldCalculator.cs" />
     <Compile Include="CoordinateSystem\SqareFieldCalculator.cs" />
-    <Compile Include="Creature.cs" />
+    <Compile Include="Modules\BuildingModule\BuildingModule.cs" />
+    <Compile Include="Unit.cs" />
     <Compile Include="CoordinateSystem\HexTileCalculator.cs" />
-    <Compile Include="IItem.cs" />
-    <Compile Include="Inventory.cs" />
+    <Compile Include="Modules\InventoryModule\IItem.cs" />
+    <Compile Include="Modules\InventoryModule\Inventory.cs" />
     <Compile Include="Items\IItem.cs" />
+    <Compile Include="Modules\HydationModule\HydrationModule.cs" />
+    <Compile Include="Modules\IModule.cs" />
+    <Compile Include="Modules\TerrainModule\TerrainHeightModule.cs" />
+    <Compile Include="Modules\UnitModule\UnitModule.cs" />
     <Compile Include="Plants\Tree.cs" />
-    <Compile Include="Wildlife\IDistributionFunction.cs" />
-    <Compile Include="Wildlife\LocalWildlife.cs" />
+    <Compile Include="Math\IDistributionFunction.cs" />
+    <Compile Include="Modules\WildlifeModule\LocalWildlife.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="World.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorldLoader\LayerLoader.cs" />
     <Compile Include="WorldLoader\WorldLoaderService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Modules\NewFolder1\" />
+    <Folder Include="Wildlife\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DynamicWorldSandbox.Model
 {
-    public class Creature
+    public class Unit
     {
-        public Creature(bool ApplyNewUniqueId = true)
+        public Unit(bool ApplyNewUniqueId = true)
         {
             UniqueID = s_currentCreatureID++;
         }
@@ -33,9 +33,9 @@ namespace DynamicWorldSandbox.Model
 
         public string Name { get; set; }
 
-        public virtual Creature CreateNewCreature()
+        public virtual Unit CreateNewCreature()
         {
-            Creature result = new Creature();
+            Unit result = new Unit();
 
             ApplyNewBuffs(result);
 
@@ -43,7 +43,7 @@ namespace DynamicWorldSandbox.Model
             return result;
         }
 
-        protected virtual void ApplyNewBuffs(Creature result)
+        protected virtual void ApplyNewBuffs(Unit result)
         {
             
         }

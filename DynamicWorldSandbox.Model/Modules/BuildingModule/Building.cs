@@ -1,10 +1,12 @@
-﻿using System;
+﻿using DynamicWorldSandbox.Model.Modules.InventoryModule;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DynamicWorldSandbox.Model
+
+namespace DynamicWorldSandbox.Model.Modules.BuildingModule
 {
     public class Building
     {
