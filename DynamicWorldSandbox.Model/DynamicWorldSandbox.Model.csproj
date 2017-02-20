@@ -48,6 +48,7 @@
     <Compile Include="CoordinateSystem\HexTileCalculator.cs" />
     <Compile Include="IItem.cs" />
     <Compile Include="Inventory.cs" />
+    <Compile Include="Items\IItem.cs" />
     <Compile Include="Plants\Tree.cs" />
     <Compile Include="Wildlife\IDistributionFunction.cs" />
     <Compile Include="Wildlife\LocalWildlife.cs" />

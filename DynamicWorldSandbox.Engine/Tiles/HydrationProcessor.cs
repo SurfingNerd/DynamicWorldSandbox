@@ -55,18 +55,12 @@ namespace DynamicWorldSandbox.Engine.Tiles
 
         public void Run(int tickNumber)
         {
-            //UpdateHydrationTiles(tickNumber);
             m_hydrationUpdateProcessor.ProcessStep(tickNumber);
             UpdateWaterTiles(tickNumber);
         }
 
         private void UpdateWaterTiles(int tickNumber)
         {
-           
-            //double freeDropCalc = 0.00001; //little mathematical trick. we add a tiny amount to the drop in order to let it even flow in flat areas
-
-            
-
             foreach (Tile waterTile in m_waterTiles.ToArray())
             {
                
@@ -78,8 +72,7 @@ namespace DynamicWorldSandbox.Engine.Tiles
                 }
 
 
-                //this is the line of the water surface.
-
+                //this is the line of the water surface heigh.
                 double currentWaterLevelAbsolute = waterTile.TerrainHeight + waterTile.Hydration;
 
                 Tile[] neightbours = m_world.FieldCalculator.GetAllNeighbours(waterTile.X, waterTile.Y, m_world);
@@ -147,7 +140,7 @@ namespace DynamicWorldSandbox.Engine.Tiles
                     waterTile.Hydration -= totalSpilledWater;
                 }
 
-                if (waterTile.Hydration <= 1 + m_maxWaterDropPerTickProcentual) //|| isDeepestHoleInDaHood)
+                if (waterTile.Hydration <= 1 + m_maxWaterDropPerTickProcentual)
                 {
                     m_waterTiles.Remove(waterTile);
                 }

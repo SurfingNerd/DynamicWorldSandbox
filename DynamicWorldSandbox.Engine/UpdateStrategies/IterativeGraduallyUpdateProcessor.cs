@@ -43,27 +43,14 @@ namespace DynamicWorldSandbox.Engine.UpdateStrategies
             int x = 0;
             int y = 0;
 
-            //GetXY(counter, ref x, ref y);
-
-
             GetXY(m_counterForDiversityUpdate, ref x, ref y);
             int lastY = 0;
             while (y >= lastY)
             {
-                //Console.WriteLine("Update " + x + " " + y );
-                m_function(tickCount, x, y);
-                
-
+                m_function(tickCount, x, y);              
                 m_counterForDiversityUpdate += m_updateDistance;
                 lastY = y;
                 GetXY(m_counterForDiversityUpdate, ref x, ref y);
-
-                //x += m_updateDistance;
-                //if (x >= m_world.Width)
-                //{
-                //    y += x / m_world.Width;
-                //    x = x % m_world.Width;
-                //}
             }
         }
 
