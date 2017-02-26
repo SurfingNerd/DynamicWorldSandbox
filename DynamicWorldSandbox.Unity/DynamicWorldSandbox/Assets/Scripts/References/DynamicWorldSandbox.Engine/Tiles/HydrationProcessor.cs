@@ -59,7 +59,7 @@ namespace DynamicWorldSandbox.Engine.Tiles
         {
             if (!m_isInit)
             {
-                Init();
+                InitializeWaterTiles();
                 m_isInit = true;
             }
             
@@ -70,7 +70,7 @@ namespace DynamicWorldSandbox.Engine.Tiles
             }
         }
 
-        private void Init()
+        private void InitializeWaterTiles()
         {
             for (int x = 0; x < World.Width; x++)
             {
@@ -89,95 +89,192 @@ namespace DynamicWorldSandbox.Engine.Tiles
 
         private void UpdateWaterTiles(int tickNumber)
         {
-            foreach (Tile waterTile in WaterTiles)
-            {
-                if (waterTile.Hydration <= 1 + m_maxWaterDropPerTickProcentual)
+            //try
+            //{
+                foreach (Tile waterTile in WaterTiles.ToArray())
                 {
-                    //This makes a tile to just get removed if it get's close to 1.
-                    WaterTiles.Remove(waterTile);
-                    continue;
-                }
-
-
-                //this is the line of the water surface heigh.
-                double currentWaterLevelAbsolute = waterTile.TerrainHeight + waterTile.Hydration;
-
-                Tile[] neightbours = World.FieldCalculator.GetAllNeighbours(waterTile.X, waterTile.Y, World);
-                bool isDeepestHoleInDaHood = true;
-                double totalDrop = 0;
-                GetNeighbourhoodInfo(waterTile, neightbours , out isDeepestHoleInDaHood, out totalDrop);
-
-                
-
-                
-                if (!isDeepestHoleInDaHood)
-                {
-                    double totalSpilledWater = waterTile.Hydration * m_maxWaterDropPerTickProcentual;
-                    if (totalSpilledWater > m_maxWaterDropPerTick)
+                    if (waterTile.Hydration <= 1)
                     {
-                        totalSpilledWater = m_maxWaterDropPerTick;
+                        //This makes a tile to just get removed if it get's close to 1.
+                        WaterTiles.Remove(waterTile);
+                        continue;
                     }
 
-                    //If tile converts to normal hydrated tile, instead of water tile
-                    // we keep 100% hydration and spill the rest over the neightbour.s
-                    //if (waterTile.Hydration - totalSpilledWater < 1)
-                    //{
-                    //    totalSpilledWater = waterTile.Hydration - 1;
-                    //}
 
-                    for (int i = 0; i < neightbours.Length; i++)
+                    //this is the line of the water surface heigh.
+                    double currentWaterLevelAbsolute = waterTile.TerrainHeight + waterTile.Hydration;
+
+                    Tile[] neightbours = World.FieldCalculator.GetAllNeighbours(waterTile.X, waterTile.Y, World);
+                    
+                    double totalDrop = 0;
+                    GetNeighbourhoodInfo(waterTile, neightbours, out totalDrop);
+                
+                    if (totalDrop > 0)
                     {
-                        Tile neightbour = neightbours[i];
-                        if (neightbour != null)
+                        //double totalSpilledWater = waterTile.Hydration * m_maxWaterDropPerTickProcentual;
+                        //if (totalSpilledWater > m_maxWaterDropPerTick)
+                        //{
+                        //    totalSpilledWater = m_maxWaterDropPerTick;
+                        //}
+
+                        //If tile converts to normal hydrated tile, instead of water tile
+                        // we keep 100% hydration and spill the rest over the neightbour.s
+                        //if (waterTile.Hydration - totalSpilledWater < 1)
+                        //{
+                        //    totalSpilledWater = waterTile.Hydration - 1;
+                        //}
+
+                        double totalDroppedWater = 0;
+                        for (int i = 0; i < neightbours.Length; i++)
                         {
-                            double neightbourWaterLevelAbsolute = neightbour.TerrainHeight + neightbour.Hydration;
-                            double drop = currentWaterLevelAbsolute - neightbourWaterLevelAbsolute;
-
-                            if ( drop > 0)
+                            Tile neightbour = neightbours[i];
+                            if (neightbour != null)
                             {
-                                double dropPart = (drop / totalDrop);
-                                //double destructionCalcSpilledWater = dropPart * waterTile.Hydration * m_maxWaterDropPerTickProcentual;
-                                
-                                double spilledWater = totalSpilledWater * dropPart;
+                                double neightbourWaterLevelAbsolute = neightbour.TerrainHeight + neightbour.Hydration;
+                                double drop = currentWaterLevelAbsolute - neightbourWaterLevelAbsolute;
 
-
-                                double oldNeightbourHydration = neightbour.Hydration;
-                                //todo: lower terrain height here if big amounts of water are dropped deep (waterfall, canyon building effect).
-
-                                neightbour.Hydration += spilledWater;
-
-                                if (oldNeightbourHydration <= 1 + m_maxWaterDropPerTickProcentual && neightbour.Hydration > 1 + m_maxWaterDropPerTickProcentual)
+                                if (drop > 0)
                                 {
-                                    if (!WaterTiles.Contains(neightbour))
+                                    double dropPart = (drop / totalDrop);
+                                    //double destructionCalcSpilledWater = dropPart * waterTile.Hydration * m_maxWaterDropPerTickProcentual;
+
+                                    //double spilledWater = totalSpilledWater * dropPart;
+
+
+                                    //double oldNeightbourHydration = neightbour.Hydration;
+                                    //todo: lower terrain height here if big amounts of water are dropped deep (waterfall, canyon building effect).
+
+                                    //neightbour.Hydration += spilledWater;
+
+                                    double neightbourDrop = (dropPart * totalDrop * m_maxWaterDropPerTickProcentual);
+                                    neightbour.Hydration += neightbourDrop;
+                                    totalDroppedWater += neightbourDrop;
+                                    if (neightbour.Hydration > 1 && !WaterTiles.Contains(neightbour))
                                     {
-                                        Tile[] tiles = World.FieldCalculator.GetAllNeighbours(waterTile.X, waterTile.Y, World);
-                                        bool neighbourIsLowest = true;
-                                        double neighboursTotalDrop = 0;
-                                        GetNeighbourhoodInfo(neightbour, tiles, out neighbourIsLowest, out neighboursTotalDrop);
-                                        if (!neighbourIsLowest)
-                                        {
-                                            WaterTiles.Add(neightbour);
-                                        }
-                                    }   
+                                        // deep water hole special case is water tile here as well.
+                                        WaterTiles.Add(neightbour);
+                                    }
                                 }
                             }
                         }
+
+                        waterTile.Hydration -= totalDroppedWater;
                     }
 
-                    waterTile.Hydration -= totalSpilledWater;
-                }
-
-                if (waterTile.Hydration <= 1 + m_maxWaterDropPerTickProcentual)
-                {
-                    WaterTiles.Remove(waterTile);
+                    if (waterTile.Hydration <= 1)
+                    {
+                        WaterTiles.Remove(waterTile);
+                    }
                 }
             }
-        }
+            //catch (Exception exception)
+            //{
 
-        private void GetNeighbourhoodInfo(Tile waterTile, Tile[] neightbours, out bool isDeepestHoleInDaHood, out double totalDrop)
+            //}
+            //}
+
+
+        //private void UpdateWaterTiles(int tickNumber)
+        //{
+        //    try
+        //    {
+        //        foreach (Tile waterTile in WaterTiles)
+        //        {
+        //            if (waterTile.Hydration <= 1 + m_maxWaterDropPerTickProcentual)
+        //            {
+        //                //This makes a tile to just get removed if it get's close to 1.
+        //                WaterTiles.Remove(waterTile);
+        //                continue;
+        //            }
+
+
+        //            //this is the line of the water surface heigh.
+        //            double currentWaterLevelAbsolute = waterTile.TerrainHeight + waterTile.Hydration;
+
+        //            Tile[] neightbours = World.FieldCalculator.GetAllNeighbours(waterTile.X, waterTile.Y, World);
+        //            bool isDeepestHoleInDaHood = true;
+        //            double totalDrop = 0;
+        //            GetNeighbourhoodInfo(waterTile, neightbours, out isDeepestHoleInDaHood, out totalDrop);
+
+
+
+
+        //            if (!isDeepestHoleInDaHood)
+        //            {
+        //                double totalSpilledWater = waterTile.Hydration * m_maxWaterDropPerTickProcentual;
+        //                if (totalSpilledWater > m_maxWaterDropPerTick)
+        //                {
+        //                    totalSpilledWater = m_maxWaterDropPerTick;
+        //                }
+
+        //                //If tile converts to normal hydrated tile, instead of water tile
+        //                // we keep 100% hydration and spill the rest over the neightbour.s
+        //                //if (waterTile.Hydration - totalSpilledWater < 1)
+        //                //{
+        //                //    totalSpilledWater = waterTile.Hydration - 1;
+        //                //}
+
+        //                for (int i = 0; i < neightbours.Length; i++)
+        //                {
+        //                    Tile neightbour = neightbours[i];
+        //                    if (neightbour != null)
+        //                    {
+        //                        double neightbourWaterLevelAbsolute = neightbour.TerrainHeight + neightbour.Hydration;
+        //                        double drop = currentWaterLevelAbsolute - neightbourWaterLevelAbsolute;
+
+        //                        if (drop > 0)
+        //                        {
+        //                            double dropPart = (drop / totalDrop);
+        //                            //double destructionCalcSpilledWater = dropPart * waterTile.Hydration * m_maxWaterDropPerTickProcentual;
+
+        //                            double spilledWater = totalSpilledWater * dropPart;
+
+
+        //                            double oldNeightbourHydration = neightbour.Hydration;
+        //                            //todo: lower terrain height here if big amounts of water are dropped deep (waterfall, canyon building effect).
+
+        //                            neightbour.Hydration += spilledWater;
+
+        //                            if (oldNeightbourHydration <= 1 + m_maxWaterDropPerTickProcentual && neightbour.Hydration > 1 + m_maxWaterDropPerTickProcentual)
+        //                            {
+        //                                if (!WaterTiles.Contains(neightbour))
+        //                                {
+        //                                    Tile[] tiles = World.FieldCalculator.GetAllNeighbours(waterTile.X, waterTile.Y, World);
+                                            
+        //                                    double neighboursTotalDrop = 0;
+        //                                    GetNeighbourhoodInfo(neightbour, tiles, out neighboursTotalDrop);
+        //                                    if (!neighbourIsLowest)
+        //                                    {
+        //                                        WaterTiles.Add(neightbour);
+        //                                    }
+        //                                }
+        //                            }
+        //                        }
+        //                    }
+        //                }
+
+        //                waterTile.Hydration -= totalSpilledWater;
+        //            }
+
+        //            if (waterTile.Hydration <= 1 + m_maxWaterDropPerTickProcentual)
+        //            {
+        //                WaterTiles.Remove(waterTile);
+        //            }
+        //        }
+        //    }
+        //    catch (Exception exception)
+        //    {
+
+        //    }
+        //}
+
+
+
+
+        private void GetNeighbourhoodInfo(Tile waterTile, Tile[] neightbours, out double totalDrop)
         {
             totalDrop = 0;
-            isDeepestHoleInDaHood = true;
+            //isDeepestHoleInDaHood = true;
 
             double currentWaterLevelAbsolute = waterTile.WaterLevelHeight;
             for (int i = 0; i < neightbours.Length; i++)
@@ -190,7 +287,6 @@ namespace DynamicWorldSandbox.Engine.Tiles
                     if (neightbourWaterLevelAbsolute <= currentWaterLevelAbsolute)
                     {
                         totalDrop += currentWaterLevelAbsolute - neightbourWaterLevelAbsolute;
-                        isDeepestHoleInDaHood = false;
                     }
                 }
             }

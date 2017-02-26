@@ -7,57 +7,57 @@ using System.Threading.Tasks;
 namespace DynamicWorldSandbox.Scheduler
 {
 
-    internal static class SomeGeneralPerformanecTests
-    {
-        public static void RunHashCodeTest()
-        {
-            //shows collision chance distribution of standard implementation of hashset.
-            //the first collision appears about the 10.000 element
-            //thats pretty good Performence.
+    //internal static class SomeGeneralPerformanecTests
+    //{
+    //    public static void RunHashCodeTest()
+    //    {
+    //        //shows collision chance distribution of standard implementation of hashset.
+    //        //the first collision appears about the 10.000 element
+    //        //thats pretty good Performence.
 
-            int total = 0;
-            int countOfTestIterations = 100000;
+    //        int total = 0;
+    //        int countOfTestIterations = 100000;
 
-            Dictionary<int, int> hashCollisions = new Dictionary<int, int>();
-            for (int j = 0; j < countOfTestIterations; j++)
-            {
-                Dictionary<int, object> objs = new Dictionary<int, object>();
-                for (int i = 0; i < int.MaxValue; i++)
-                {
-                    object obj = new object();
-                    int hash = obj.GetHashCode();
-                    if (objs.ContainsKey(hash))
-                    {
-                        if (hashCollisions.ContainsKey(i))
-                        {
-                            hashCollisions[i] = hashCollisions[i] + 1;
-                        }
-                        else
-                        {
-                            hashCollisions.Add(i, 1);
-                        }
+    //        Dictionary<int, int> hashCollisions = new Dictionary<int, int>();
+    //        for (int j = 0; j < countOfTestIterations; j++)
+    //        {
+    //            Dictionary<int, object> objs = new Dictionary<int, object>();
+    //            for (int i = 0; i < int.MaxValue; i++)
+    //            {
+    //                object obj = new object();
+    //                int hash = obj.GetHashCode();
+    //                if (objs.ContainsKey(hash))
+    //                {
+    //                    if (hashCollisions.ContainsKey(i))
+    //                    {
+    //                        hashCollisions[i] = hashCollisions[i] + 1;
+    //                    }
+    //                    else
+    //                    {
+    //                        hashCollisions.Add(i, 1);
+    //                    }
 
-                        total += i;
+    //                    total += i;
 
-                        break;
-                    }
-                    else
-                    {
-                        objs.Add(hash, obj);
-                    }
-                }
-            }
+    //                    break;
+    //                }
+    //                else
+    //                {
+    //                    objs.Add(hash, obj);
+    //                }
+    //            }
+    //        }
 
-            foreach (var kvp in hashCollisions)
-            {
-                if (kvp.Value > 1)
-                    Console.WriteLine(kvp.Key + " - " + kvp.Value + " times.");
-            }
+    //        foreach (var kvp in hashCollisions)
+    //        {
+    //            if (kvp.Value > 1)
+    //                Console.WriteLine(kvp.Key + " - " + kvp.Value + " times.");
+    //        }
 
-            double average = total / countOfTestIterations;
-            Console.WriteLine("Average: " + average.ToString("#.######"));
+    //        double average = total / countOfTestIterations;
+    //        Console.WriteLine("Average: " + average.ToString("#.######"));
 
-        }
+    //    }
 
         //public static void RunHashSetVsListPerformanceTest()
         //{

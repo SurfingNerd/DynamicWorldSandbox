@@ -8,4 +8,10 @@
 /DynamicWorldSandbox.Scheduler/obj/
 /DynamicWorldSandbox.Simulator/bin/
 /DynamicWorldSandbox.Simulator/obj/
+/DynamicWorldSandbox.Scheduler/DynamicWorldSandbox.Scheduler/bin/
+/DynamicWorldSandbox.Scheduler/DynamicWorldSandbox.Scheduler/obj/
+
+*.bin
+/DynamicWorldSandbox.Unity/DynamicWorldSandbox/Build/
+/DynamicWorldSandbox.Unity/DynamicWorldSandbox/Library/
 
