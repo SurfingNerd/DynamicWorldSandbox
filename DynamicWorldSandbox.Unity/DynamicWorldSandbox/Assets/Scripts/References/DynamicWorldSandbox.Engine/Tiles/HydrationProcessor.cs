@@ -17,7 +17,7 @@ namespace DynamicWorldSandbox.Engine.Tiles
     {
         public World World;
         //IterativeGraduallyUpdateProcessor m_hydrationUpdateProcessor;  
-        RandomMemoryGraduallyUpdateProcessor m_hydrationUpdateProcessor;
+        public IGraduallyUpdateProcessor HydrationUpdateProcessor;
 
         double m_maxHydrationTransferPerTick;
         double m_procentualHydrationTransferPerTick;
@@ -33,8 +33,9 @@ namespace DynamicWorldSandbox.Engine.Tiles
         {
             //m_wholeWorldUpdateFrequency = wholeWorldUpdateFrequency;
             World = world;
-            m_hydrationUpdateProcessor = new RandomMemoryGraduallyUpdateProcessor(100);
-            m_hydrationUpdateProcessor.Initialize(world, new ProcessFunction(UpdateHydrationTile));
+            //HydrationUpdateProcessor = new RandomMemoryGraduallyUpdateProcessor(100);
+            HydrationUpdateProcessor = new IterativeGraduallyUpdateProcessor(updateDistance);
+            HydrationUpdateProcessor.Initialize(world, new ProcessFunction(UpdateHydrationTile));
 
             m_maxHydrationTransferPerTick = maxHydrationTransferPerTick;
             m_procentualHydrationTransferPerTick = procentualHydrationTransferPerTick;
@@ -65,7 +66,7 @@ namespace DynamicWorldSandbox.Engine.Tiles
             
             if (m_isInit)
             {
-                m_hydrationUpdateProcessor.ProcessStep(tickNumber);
+                HydrationUpdateProcessor.ProcessStep(tickNumber);
                 UpdateWaterTiles(tickNumber);
             }
         }
