@@ -108,7 +108,7 @@ public class DynamicWorldSandboxRunner : MonoBehaviour {
 
         World world = CreatedWorld;
 
-        world.Tiles[10, 10].Hydration = 10000;
+        world.Tiles[10, 10].Hydration = 1000;
 
         world.Tiles[30, 30].TerrainHeight = -1;
         world.Tiles[29, 29].TerrainHeight = -1;
@@ -132,6 +132,17 @@ public class DynamicWorldSandboxRunner : MonoBehaviour {
         BuildRiverNorthSoutch(world, 24, 0, 62, 5);
         BuildRiverNorthSoutch(world, 25, 0, 61, 5);
         BuildRiverNorthSoutch(world, 25, 0, 60, 5);
+    
+        for (int x = 90; x < 100; x++)
+        {
+            BuildRiverNorthSoutch(world, x, 0, 99, 3);
+        }
+
+        for (int y = 90; y < 100; y++)
+        {
+            BuildRiverWest(world, y, 0, 99, 5);
+            
+        }
 
         //Console.WriteLine("After initialisation.");
        // DebugWaterInfos(world);
@@ -174,6 +185,14 @@ public class DynamicWorldSandboxRunner : MonoBehaviour {
     private static void BuildRiverNorthSoutch(World world, int x, int yStart, int yEnd, int depth)
     {
         for (int y = yStart; y <= yEnd; y++)
+        {
+            world.Tiles[x, y].TerrainHeight = depth;
+        }
+    }
+
+    private static void BuildRiverWest(World world, int y, int xStart, int xEnd, int depth)
+    {
+        for (int x = xStart; x <= xEnd; x++)
         {
             world.Tiles[x, y].TerrainHeight = depth;
         }

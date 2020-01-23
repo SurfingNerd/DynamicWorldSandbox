@@ -47,7 +47,7 @@ namespace DynamicWorldSandbox.Engine.Tiles
                 for (int y = 0; y < world.Height; y++)
                 {
                     Tile tile = world.Tiles[x, y];
-                    if (tile.Hydration > 1)
+                    if (tile.Hydration >= 1)
                     {
                         WaterTiles.Add(tile);
                     }
@@ -309,17 +309,38 @@ namespace DynamicWorldSandbox.Engine.Tiles
                 Tile neighbour = neightbours[i];
                 if (neighbour != null)
                 {
+                    
                     //some tiles will give the hydration out of the world.
                     //but its OK, you fall out there anywhere in the flat world...
                     double hydration = tile.Hydration * (m_procentualHydrationTransferPerTick / neightbours.Length);
-
+                    
                     if (hydration > m_maxHydrationTransferPerTick)
                     {
                         hydration = m_maxHydrationTransferPerTick;
                     }
-                    neighbour.Hydration += hydration;
 
+                    
+                    double neibourHydration = neighbour.Hydration;
 
+                    bool neightbourWasWater = neibourHydration >= 1;
+
+                    neibourHydration += hydration;
+
+                    neighbour.Hydration = neibourHydration;
+
+                    bool isWaterTileNow = neibourHydration >= 1;
+
+                    if (neightbourWasWater != isWaterTileNow)
+                    {
+                        if (isWaterTileNow)
+                        {
+                            WaterTiles.Add(neighbour);
+                        }
+                        else
+                        {
+                            WaterTiles.Remove(neighbour);
+                        }
+                    }
 
                     thisTileTotalDehydration += hydration;
                 }

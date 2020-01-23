@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class TerrrainDebugControl : MonoBehaviour {
 
-    public double FillWaterAmount = 5;
+    public double FillWaterAmount = 10;
 
-    public double TerrainRaise = 1;
+    public double TerrainRaise = 2;
 
     // Use this for initialization
     void Start () {
@@ -108,6 +108,8 @@ public class TerrrainDebugControl : MonoBehaviour {
 
                 Tile tile = DynamicWorldSandboxRunner.LastStartedInstance.CreatedWorld.Tiles[tileX, tileY];
                 DynamicWorldSandboxRunner.LastStartedInstance.HydrationProcessor.WaterTiles.Add(tile);
+
+                
             }
         }
 
