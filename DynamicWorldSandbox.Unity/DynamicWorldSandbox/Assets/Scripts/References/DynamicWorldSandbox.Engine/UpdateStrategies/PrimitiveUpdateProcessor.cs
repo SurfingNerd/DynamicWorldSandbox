@@ -13,12 +13,19 @@ namespace DynamicWorldSandbox.Engine.UpdateStrategies
 
     public void Initialize(World world, ProcessFunction function)
     {
-      throw new NotImplementedException();
+      m_world = world;
+      m_function = function;
     }
 
     public void ProcessStep(int tickCount)
     {
-      throw new NotImplementedException();
+      for (int x = 0; x < m_world.Width; x++)
+      {
+        for (int y = 0; y < m_world.Height; y++)
+        {
+          m_function.Invoke(tickCount, x, y);
+        }
+      }
     }
   }
 }

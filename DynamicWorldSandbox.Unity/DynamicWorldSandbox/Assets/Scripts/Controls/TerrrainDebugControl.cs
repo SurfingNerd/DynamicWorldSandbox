@@ -106,8 +106,8 @@ public class TerrrainDebugControl : MonoBehaviour {
 
                 DynamicWorldSandbox.Model.Modules.HydrationModule.HydrationModule.LastInitializedInstance.HydrationValues[tileX, tileY] += FillWaterAmount;
 
-                Tile tile = DynamicWorldSandboxRunner.LastStartedInstance.CreatedWorld.Tiles[tileX, tileY];
-                DynamicWorldSandboxRunner.LastStartedInstance.HydrationProcessor.WaterTiles.Add(tile);
+                //Tile tile = DynamicWorldSandboxRunner.LastStartedInstance.CreatedWorld.Tiles[tileX, tileY];
+                //DynamicWorldSandboxRunner.LastStartedInstance.HydrationProcessor.WaterTiles.Add(tile);
 
                 
             }

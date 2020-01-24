@@ -42,8 +42,7 @@ public class WaterLevelRenderer : MonoBehaviour, ISquareFieldModuleTileRenderer
         gameObject.transform.localScale = new Vector3(1,1, (float)waterLevel);
         gameObject.transform.position = new Vector3(tile.X , tile.Y,(float)waterHeight);
         Renderer renderer = gameObject.GetComponent<Renderer>();
-        renderer.material.color =
-            (DynamicWorldSandboxRunner.LastStartedInstance.HydrationProcessor.WaterTiles.Contains(tile)) ? DeepWaterColor : LowerWaterColor;
+        renderer.material.color = waterLevel > 1 ? DeepWaterColor : LowerWaterColor;
         //tile.TerrainHeight
     }
 }

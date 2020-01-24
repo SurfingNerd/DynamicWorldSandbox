@@ -24,6 +24,8 @@ public class DynamicWorldSandboxRunner : MonoBehaviour {
 
     public HydrationProcessor HydrationProcessor { get; internal set; }
 
+    public bool IsSimulationActive = true;
+
     //public int RoundsPerUpdateIntervall;
     //private int 
 
@@ -63,6 +65,15 @@ public class DynamicWorldSandboxRunner : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        if (Input.GetKey(KeyCode.Return))
+        {
+            IsSimulationActive = !IsSimulationActive;
+        }
+
+        if (!IsSimulationActive)
+        {
+            return;
+        }
 
         mTimePassedWithoutUpdate += Time.deltaTime;
 

@@ -8,7 +8,7 @@ public class DebugWaterTileCount : TextUpdateMonoBehaviour
 {
     protected override void UpdateTextComponent(Text textComponent)
     {
-        textComponent.text = "Floating WAter Tiles: " + DynamicWorldSandboxRunner.LastStartedInstance.HydrationProcessor.WaterTiles.Count;
+        //textComponent.text = "Floating WAter Tiles: " + DynamicWorldSandboxRunner.LastStartedInstance.HydrationProcessor.WaterTiles.Count;
     }
     
 }
