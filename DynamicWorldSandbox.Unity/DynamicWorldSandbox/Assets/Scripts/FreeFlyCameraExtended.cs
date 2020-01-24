@@ -46,9 +46,9 @@ namespace Assets.Scripts
         {
             rotationX += Input.GetAxis("Mouse X") * cameraSensitivity * Time.deltaTime;
             rotationY += Input.GetAxis("Mouse Y") * cameraSensitivity * Time.deltaTime;
-            rotationY = Mathf.Clamp(rotationY, -90, 90);
+            //rotationY = Mathf.Clamp(rotationY, -90, 90);
 
-            transform.localRotation = Quaternion.AngleAxis(rotationX, Vector3.up);
+            transform.localRotation = Quaternion.AngleAxis(rotationX, Vector3.forward);
             transform.localRotation *= Quaternion.AngleAxis(rotationY, Vector3.left);
 
             if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
